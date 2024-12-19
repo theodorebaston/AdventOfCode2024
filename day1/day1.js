@@ -1,26 +1,18 @@
-const firstList = [3,4,2,1,3,3];
-const secondList = [4,3,5,3,9,3];
+const fs = require('fs');
+
+const text = fs.readFileSync('./day1Input.txt', 'utf8');
+const input = text.split('\n');
+
 
 function Sorter(listOne, listTwo) {
     
     // Sort the arrays from lowest to highest
     listOne.sort((a,b) => a - b);
     listTwo.sort((a,b) => a - b);
-
-    console.log(firstList);
-    console.log(secondList);
-
-    // Safeguard against arrays of different lengths, just in case.
-    var arrayLength;
-    if(listOne.length >= listTwo.length) {
-        arrayLength = listOne.length
-    } else if (listOne.length < listTwo.length) {
-        arrayLength = listTwo.length
-    }
-
+    
     // Add up the difference in each array position between the two lists
     var totalDistance = 0;
-    for (let i = 0; i < arrayLength; i++) {
+    for (let i = 0; i < listOne.length; i++) {
         var diff = listOne[i] - listTwo[i]
         if(diff < 0) {
             totalDistance += (diff * -1)
@@ -28,8 +20,19 @@ function Sorter(listOne, listTwo) {
             totalDistance += diff
         }
     }
-
-    console.log(totalDistance)
+    
+    // console.log(totalDistance)
+    return totalDistance
 }
 
-Sorter(firstList, secondList);
+let answer = 0;
+for (let i = 0; i < input.length; i++) {
+    const [a,b,c,d,e,,,,v,w,x,y,z] = input[i].split('');
+    const leftList = [a,b,c,d,e]
+    const rightList = [v,w,x,y,z]
+    
+    answer += Sorter(leftList, rightList);
+
+}
+console.log(answer)
+return answer
